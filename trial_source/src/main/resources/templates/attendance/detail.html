@@ -42,6 +42,7 @@
 	</th:block>
 
 	<div class="row">
+		
 		<div class="bs-component col-sm-12">
 			<table class="table table-hover dataTable no-footer">
 				<thead class="db">
@@ -56,7 +57,7 @@
 					</tr>
 				</thead>
 
-				<tbody class="db">
+				<tbody class="db" id="attendanceTbody" style="overflow-y: scroll; max-height:375px;">
 					<th:block th:each="attendanceManagementDto : ${attendanceManagementDtoList}" th:object="${attendanceManagementDto}">
 						<tr>
 							<td class="w160">[[*{#dates.format(trainingDate, 'yyyy年M月d日(E)')}]]</td>
@@ -72,6 +73,29 @@
 			</table>
 		</div>
 	</div>
+	
+	<script>
+		const tbody = document.document.getElementById("attendanceTbody");
+		function render10() {
+			tbody.innerHTML = "";
+			const ten = allData.slice(0,10);
+			ten.forEach(item => {
+				const tr = documernt.createElement("tr");
+				tr.innerHTML = `
+					<td class="w160">[[*{#dates.format(trainingDate, 'yyyy年M月d日(E)')}]]</td>
+					<td class="w260">[[*{sectionName}]]</td>
+					<td class="w80">[[*{trainingStartTime}]]</td>
+					<td class="w80">[[*{trainingEndTime}]]</td>
+					<td class="w120">[[*{blankTimeValue}]]</td>
+					<td class="w120">[[*{statusDispName}]]</td>
+					<td class="w200">[[*{note}]]</td>
+				
+				`;
+				tbody.appendChild(tr);
+			});
+		}
+		render10();
+	</script>
 
 	<script type="text/javascript" th:inline="javascript">
 		$(function() {
