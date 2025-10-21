@@ -74,27 +74,18 @@
 		</div>
 	</div>
 	
-	<script>
-		const tbody = document.document.getElementById("attendanceTbody");
-		function render10() {
-			tbody.innerHTML = "";
-			const ten = allData.slice(0,10);
-			ten.forEach(item => {
-				const tr = documernt.createElement("tr");
-				tr.innerHTML = `
-					<td class="w160">[[*{#dates.format(trainingDate, 'yyyy年M月d日(E)')}]]</td>
-					<td class="w260">[[*{sectionName}]]</td>
-					<td class="w80">[[*{trainingStartTime}]]</td>
-					<td class="w80">[[*{trainingEndTime}]]</td>
-					<td class="w120">[[*{blankTimeValue}]]</td>
-					<td class="w120">[[*{statusDispName}]]</td>
-					<td class="w200">[[*{note}]]</td>
-				
-				`;
-				tbody.appendChild(tr);
-			});
+	<div id="popup" style="display:none; position:fixed; top:40%; background:#fff;padding:20px;border:1px solid #ccc;">
+		<button onclick="closePopup()">OK</button>)
+	</div>
+	
+	<script type="text/javascript" th:inline="javascript">
+		function showPopup() {
+			document.getElementById("popup").style.display = "block";
 		}
-		render10();
+		function closePopup() {
+			document.getElementById("popup").style.display = "none";
+		}
+		alert("過去日に未入力があります");
 	</script>
 
 	<script type="text/javascript" th:inline="javascript">
