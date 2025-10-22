@@ -57,7 +57,7 @@
 					</tr>
 				</thead>
 
-				<tbody class="db" id="attendanceTbody" style="overflow-y: scroll; max-height:375px;">
+				<tbody class="db" id="attendanceTbody">
 					<th:block th:each="attendanceManagementDto : ${attendanceManagementDtoList}" th:object="${attendanceManagementDto}">
 						<tr>
 							<td class="w160">[[*{#dates.format(trainingDate, 'yyyy年M月d日(E)')}]]</td>
