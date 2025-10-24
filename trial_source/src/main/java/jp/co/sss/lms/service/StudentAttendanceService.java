@@ -1,9 +1,13 @@
 package jp.co.sss.lms.service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -333,5 +337,55 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
+	/*文字列空・未設定判定*/
+	private static boolean isBlack(String s) {
+		return s == null || s.trim().isEmpty();
+	}
 
+	
+	public static class AttendancePageVM {
+		public List<AttendanceManagementDto> List;
+		public boolean hasPastMissing;
+		public List<String> missingDates;
+	}
+	
+
+	private static boolean isBlank(String s){return s == null || s.trim().isEmpty(); }
+	public AttendancePageVM loadAttendancePageForStudent() {
+		Integer couseId = loginUserDto.getCourseId();
+		Integer lmsUserId = loginUserDto.getLmsUserId();
+			
+	List<AttendanceManagementDto> list = getAttendanceManagement(couseId, lmsUserId);
+		SimpleDateFormat sdfBase = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfDisp = new SimpleDateFormat("yyyy年M月d日(E)");
+		try {
+			String todayStr = sdfBase.format(new Date());
+			Date baseDate = sdfBase.parse(todayStr);
+			int missingCount = 0;
+			Set<String> dispDates = new LinkedHashSet<>();
+			for(AttendanceManagementDto dto :list) {
+				Date d = dto.getTrainingDate();
+				if (d == null) continue;
+					if(d.before(baseDate)) {
+						boolean noStart = isBlank(dto.getTrainingStartTime());
+						boolean noEnd = isBlank(dto.getTrainingEndTime());
+						if (noStart || noEnd) {
+							missingCount++;
+							dispDates.add(sdfDisp.format(d));
+						}
+					}
+				}
+			AttendancePageVM vm = new AttendancePageVM();
+			vm.List =list;
+			vm.hasPastMissing = (missingCount > 0);
+			vm.missingDates = new ArrayList<>(dispDates);
+			return vm;
+		} catch (Exception e) {
+			AttendancePageVM vm = new AttendancePageVM();
+			vm.List = list;
+			vm.hasPastMissing = false;
+			vm.missingDates = Collections.emptyList();
+			return vm;
+		}		
+	}	
 }
