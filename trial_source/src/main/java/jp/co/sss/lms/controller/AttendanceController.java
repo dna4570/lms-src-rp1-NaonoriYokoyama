@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -46,9 +47,12 @@ public class AttendanceController {
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
-
+		
 		return "attendance/detail";
+		
+
 	}
+
 
 	/**
 	 * 勤怠管理画面 『出勤』ボタン押下
@@ -142,6 +146,15 @@ public class AttendanceController {
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
 		return "attendance/detail";
+	}
+	/*追記Task29GetMapping箇所_横山尚宣2025_10_25*/
+	@GetMapping("/attendance")
+	public String showAttendance(Model model) {
+
+		StudentAttendanceService.AttendancePageVM vm = studentAttendanceService.loadAttendancePageForStudent();
+		model.addAttribute("attendanceManagementDtoList", vm.List);
+		model.addAttribute("missingPageDates",vm.missingDates);
+		return "attendance/list";
 	}
 
 }
