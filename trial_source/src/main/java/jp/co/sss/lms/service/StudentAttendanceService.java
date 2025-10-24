@@ -1,13 +1,12 @@
 package jp.co.sss.lms.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -349,43 +348,18 @@ public class StudentAttendanceService {
 		public List<String> missingDates;
 	}
 	
-
-	private static boolean isBlank(String s){return s == null || s.trim().isEmpty(); }
-	public AttendancePageVM loadAttendancePageForStudent() {
-		Integer couseId = loginUserDto.getCourseId();
-		Integer lmsUserId = loginUserDto.getLmsUserId();
-			
-	List<AttendanceManagementDto> list = getAttendanceManagement(couseId, lmsUserId);
-		SimpleDateFormat sdfBase = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdfDisp = new SimpleDateFormat("yyyy年M月d日(E)");
-		try {
-			String todayStr = sdfBase.format(new Date());
-			Date baseDate = sdfBase.parse(todayStr);
-			int missingCount = 0;
-			Set<String> dispDates = new LinkedHashSet<>();
-			for(AttendanceManagementDto dto :list) {
-				Date d = dto.getTrainingDate();
-				if (d == null) continue;
-					if(d.before(baseDate)) {
-						boolean noStart = isBlank(dto.getTrainingStartTime());
-						boolean noEnd = isBlank(dto.getTrainingEndTime());
-						if (noStart || noEnd) {
-							missingCount++;
-							dispDates.add(sdfDisp.format(d));
-						}
-					}
-				}
-			AttendancePageVM vm = new AttendancePageVM();
-			vm.List =list;
-			vm.hasPastMissing = (missingCount > 0);
-			vm.missingDates = new ArrayList<>(dispDates);
-			return vm;
-		} catch (Exception e) {
-			AttendancePageVM vm = new AttendancePageVM();
-			vm.List = list;
-			vm.hasPastMissing = false;
-			vm.missingDates = Collections.emptyList();
-			return vm;
-		}		
-	}	
+	private static final ZoneId ZONE = ZoneId.of("Asia/Tokyo");
+	public Void Update(AttendanceForm form) {
+		LocalDate target = form.getWorkDate();
+		LocalTime clockOut = form.getClockOut();
+		LocalDate today = LocalDate.now(ZONE);
+		
+		if(target != null && target.isBefore(today) && clockOut == null) {
+			throw new BusinessRuleViolationException (
+			"過去日なのに退勤時間が未入力です。先に退勤時間を入力してください。",
+			"/attendance/detail?date=" + (target != null ? target : "")
+			);
+		}
+	}
+		
 }
