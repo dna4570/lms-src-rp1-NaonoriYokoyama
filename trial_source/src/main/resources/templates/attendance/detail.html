@@ -79,18 +79,18 @@
 		</div>
 	</th:block>
 	
-
-<script type="text/javascript" th:inline="javascript">
-	const hasPastMissing = false;
-	if(hasPastMissing) {
-		const dates = [];
-		if(dates.length > 0) {
-			alert('過去日に未入力の出勤/退勤があります。/n-'+ Date.join('/n- '));
-		}else{
-			alert('過去日に未入力の出勤・退勤があります。直接編集で入力してください。');
+	<!-- Task29横山追記 -->
+	<script type="text/javascript" th:inline="javascript">
+		const hasPastMissing = false;
+		if(hasPastMissing) {
+			const dates = [];
+			if(dates.length > 0) {
+				alert('過去日に未入力の出勤/退勤があります。/n-'+ Date.join('/n- '));
+			}else{
+				alert('過去日に未入力の出勤・退勤があります。直接編集で入力してください。');
+			}
 		}
-	}
-</script>-->
+	</script>
 	
 
 
