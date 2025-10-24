@@ -1,15 +1,18 @@
 package jp.co.sss.lms.controller;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
@@ -30,6 +33,8 @@ public class AttendanceController {
 	private StudentAttendanceService studentAttendanceService;
 	@Autowired
 	private LoginUserDto loginUserDto;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate workDate;
 
 	/**
 	 * 勤怠管理画面 初期表示
@@ -147,14 +152,12 @@ public class AttendanceController {
 
 		return "attendance/detail";
 	}
+	
 	/*追記Task29GetMapping箇所_横山尚宣2025_10_25*/
-	@GetMapping("/attendance")
-	public String showAttendance(Model model) {
-
-		StudentAttendanceService.AttendancePageVM vm = studentAttendanceService.loadAttendancePageForStudent();
-		model.addAttribute("attendanceManagementDtoList", vm.List);
-		model.addAttribute("missingPageDates",vm.missingDates);
-		return "attendance/list";
+	@PostMapping("/attendance/update")
+	public String update(AttendanceForm form, RedirectAttributes ra) {
+		studentAttendanceService.update(form);
+		return"redirect:/attendance/detail?date=" + ((Object) form).getWorkDate();
 	}
 
 }
