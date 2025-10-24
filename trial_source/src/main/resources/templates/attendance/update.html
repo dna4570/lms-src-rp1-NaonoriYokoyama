@@ -95,15 +95,29 @@
 	
 		<!-- Task29横山追記 -->
 	<script type="text/javascript" th:inline="javascript">
-		const hasPastMissing = false;
-		if(hasPastMissing) {
-			const dates = [];
-			if(dates.length > 0) {
-				alert('過去日に未入力の出勤/退勤があります。/n-'+ Date.join('/n- '));
-			}else{
-				alert('過去日に未入力の出勤・退勤があります。直接編集で入力してください。');
-			}
-		}
+		(function(){
+			var form = document.getElementById('attendanceForm');
+			var workDateEl = document.geyElementBiId('workDate');
+			var clockOutEL = document.getElementById('clockOut');
+			
+			form.addEventListenner('submit', function(e) {
+				var dataStr = workDateEl && workDateEl.value ? workDateEl.value : "";
+				var outStr = clockOutEl && clockOutEl.value ? clockEl.value.trim() : "";
+				
+				if (!dateStr) return;
+				
+				var today = new Date();
+				today.setHours(0,0,0,0);
+				var target = new Date(dateStr+ "T00:00");
+				
+				var isPast = target.getTime() < today.getTime();
+				if(isPast &&  isClockOutEmpty) {
+					alert("過去日なのに退勤時間が未入力です。")
+					e.prevantDatault();;
+					return;
+				}
+				});
+			})();
 	</script>
 
 </body>
