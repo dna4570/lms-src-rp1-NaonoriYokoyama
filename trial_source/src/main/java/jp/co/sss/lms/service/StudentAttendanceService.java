@@ -342,7 +342,7 @@ public class StudentAttendanceService {
 		return s == null || s.trim().isEmpty();
 	}
 
-	
+	/*Task25横山追記とコンパイルエラー修正分*/
 	public static class AttendancePageVM {
 		public List<AttendanceManagementDto> List;
 		public boolean hasPastMissing;
