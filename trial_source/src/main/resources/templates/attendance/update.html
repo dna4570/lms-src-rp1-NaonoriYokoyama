@@ -17,6 +17,15 @@
 			<h2><small>途中退校日：${dispLeaveDate}</small></h2>
 		</th:block>
 	</th:block>
+	
+		<!-- Task29横山追記-->
+	<th:block th:if="${hasPastMissing}">
+		<div class="alert alert-warning">
+			<span th:text="${message}">過去日に未入力の勤怠日があります</span>
+		</div>
+	</th:block>
+	
+
 
 	<div class="row" style="overflow-y: scroll; max-height:600px;">
 		<div class="bs-component col-sm-12">
@@ -83,6 +92,19 @@
 			</form>
 		</div>
 	</div>
+	
+		<!-- Task29横山追記 -->
+	<script type="text/javascript" th:inline="javascript">
+		const hasPastMissing = false;
+		if(hasPastMissing) {
+			const dates = [];
+			if(dates.length > 0) {
+				alert('過去日に未入力の出勤/退勤があります。/n-'+ Date.join('/n- '));
+			}else{
+				alert('過去日に未入力の出勤・退勤があります。直接編集で入力してください。');
+			}
+		}
+	</script>
 
 </body>
 </html>
