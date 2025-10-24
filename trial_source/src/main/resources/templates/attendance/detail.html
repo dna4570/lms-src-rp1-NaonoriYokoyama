@@ -73,20 +73,26 @@
 			</table>
 		</div>
 	</div>
+	<th:block th:if="${hasPastMissing}">
+		<div class="alert alert-warning">
+			<span th:text="${message}">過去日に未入力の勤怠日があります</span>
+		</div>
+	</th:block>
 	
-<!--	<div id="popup" style="display:none; position:fixed; top:40%; background:#fff;padding:20px;border:1px solid #ccc;">-->
-<!--		<button onclick="closePopup()">OK</button>)-->
-<!--	</div>-->
+
+<script type="text/javascript" th:inline="javascript">
+	const hasPastMissing = false;
+	if(hasPastMissing) {
+		const dates = [];
+		if(dates.length > 0) {
+			alert('過去日に未入力の出勤/退勤があります。/n-'+ Date.join('/n- '));
+		}else{
+			alert('過去日に未入力の出勤・退勤があります。直接編集で入力してください。');
+		}
+	}
+</script>-->
 	
-<!--	<script type="text/javascript" th:inline="javascript">-->
-<!--		function showPopup() {-->
-<!--			document.getElementById("popup").style.display = "block";-->
-<!--		}-->
-<!--		function closePopup() {-->
-<!--			document.getElementById("popup").style.display = "none";-->
-<!--		}-->
-<!--		alert("過去日に未入力があります");-->
-<!--	</script>-->
+
 
 	<script type="text/javascript" th:inline="javascript">
 		$(function() {
