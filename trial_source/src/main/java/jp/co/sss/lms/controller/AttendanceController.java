@@ -9,10 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
@@ -48,14 +47,28 @@ public class AttendanceController {
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
 	public String index(Model model) {
 
+		
+		//サービスのメソッドを呼び出して、以下のことを行う
+		//①本日の日付けの取得（SimpleDateFormat）
+		//②マッパーを活用して、勤怠の未入力件数を取得する
+		//③未入力件数が0件より多かったtrue,それ以外はfalseを返す。
+		
+		//受け取った結果を画面に返します。model.addAttribute
+		
 		// 勤怠一覧の取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 		
 		return "attendance/detail";
+	}
+	
+	@GetMapping("attendance/detail")
+	public String loadAttendancePageForStudent(Model model) {
+			boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast();
+			model.addAttribute("hashUninput",hasUninput);
+			return "attendance/detail";
 		
-
 	}
 
 
@@ -154,10 +167,11 @@ public class AttendanceController {
 	}
 	
 	/*追記Task29GetMapping箇所_横山尚宣2025_10_25*/
-	@PostMapping("/attendance/update")
-	public String update(AttendanceForm form, RedirectAttributes ra) {
-		rs.addFlashAttribute("message",result,message());
-		return"redirect:" + result.redirect();
-	}
+//	@GetMapping("/attendance/checkPastUninput")
+//	@ResponseBody
+//	public boolean checkPastUninput() {
+//		return studentAttendanceService.hasPasUnitputForStudent();
+//	}
+	
 
 }
