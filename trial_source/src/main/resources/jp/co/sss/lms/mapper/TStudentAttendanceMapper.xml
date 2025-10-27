@@ -95,9 +95,13 @@
 			lms_user_id_=#{lmsUserId}
 			AND delete_flg = #{deleteFlg}
 			AND training_date <= #{trainingDate}
-			条件
+			<if test="id != null">
+			
+			</if>
 			AND (
-			条件二つ
+			<if test="name !=null">
+			
+			</if>
 				training_start_time IS NULL
 			OR training_end_time IS NULL
 		)
