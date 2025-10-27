@@ -86,16 +86,18 @@
 		WHERE student_attendance_id = #{studentAttendanceId}
 	</update>
 	
-	<select id="selectNotEnterCount" resultType="int">
+	<select id="notEnterCount" resultType="Integer">
 		SELECT
-			COUNT(*)AS notEnterCount
+			COUNT(*)
 		FROM
 			t_student_attendance
 		WHERE
 			lms_user_id_=#{lmsUserId}
 			AND delete_flg = #{deleteFlg}
 			AND training_date <= #{trainingDate}
+			条件
 			AND (
+			条件二つ
 				training_start_time IS NULL
 			OR training_end_time IS NULL
 		)
