@@ -156,8 +156,8 @@ public class AttendanceController {
 	/*追記Task29GetMapping箇所_横山尚宣2025_10_25*/
 	@PostMapping("/attendance/update")
 	public String update(AttendanceForm form, RedirectAttributes ra) {
-		studentAttendanceService.update(form);
-		return"redirect:/attendance/detail?date=" + ((Object) form).getWorkDate();
+		rs.addFlashAttribute("message",result,message());
+		return"redirect:" + result.redirect();
 	}
 
 }
