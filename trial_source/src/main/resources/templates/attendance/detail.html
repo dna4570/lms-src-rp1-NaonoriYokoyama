@@ -73,11 +73,17 @@
 			</table>
 		</div>
 	</div>
+	<th:block th:if="${hasUninput}">
+		<div class="alert alert-warning"style="visibility;hidden">
+			過去日を含めて未入力の勤怠があります。
+		</div>
+	</th:block>"
 
 	
 
 
 	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
 		$(function() {
 			$("#now").text('現在の時刻は　' + getClock() + '　です。');
 			setInterval(function() {
@@ -90,16 +96,19 @@
 			const minutes = ('0' + today.getMinutes()).slice(-2);
 			return hours + ':' + minutes;
 		}
+		/*]]>*/
 	</script>
 	
-			<!-- Task29横山追記 -->
+			<!-- Task25横山追記 -->
 	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
 		document.addEventListener('DOMContentLoaded',function(){
 			var hasUninput = false;
 			if(hasUninput){
-				alert('過去日を含めて未入力の勤怠があります。');
+				alert('過去日の勤怠に未入力があります。');
 			}
 		});
+		/*]]>*/
 	</script>
 
 </body>
