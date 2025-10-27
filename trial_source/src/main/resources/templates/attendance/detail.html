@@ -91,6 +91,16 @@
 			return hours + ':' + minutes;
 		}
 	</script>
+	
+			<!-- Task29横山追記 -->
+	<script type="text/javascript" th:inline="javascript">
+		document.addEventListener('DOMContentLoaded',function(){
+			var hasUninput = false;
+			if(hasUninput){
+				alert('過去日を含めて未入力の勤怠があります。');
+			}
+		});
+	</script>
 
 </body>
 </html>

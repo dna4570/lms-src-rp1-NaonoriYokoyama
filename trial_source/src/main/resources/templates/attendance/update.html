@@ -93,32 +93,7 @@
 		</div>
 	</div>
 	
-		<!-- Task29横山追記 -->
-	<script type="text/javascript" th:inline="javascript">
-		(function(){
-			var form = document.getElementById('attendanceForm');
-			var workDateEl = document.geyElementBiId('workDate');
-			var clockOutEL = document.getElementById('clockOut');
-			
-			form.addEventListenner('submit', function(e) {
-				var dataStr = workDateEl && workDateEl.value ? workDateEl.value : "";
-				var outStr = clockOutEl && clockOutEl.value ? clockEl.value.trim() : "";
-				
-				if (!dateStr) return;
-				
-				var today = new Date();
-				today.setHours(0,0,0,0);
-				var target = new Date(dateStr+ "T00:00");
-				
-				var isPast = target.getTime() < today.getTime();
-				if(isPast &&  isClockOutEmpty) {
-					alert("過去日なのに退勤時間が未入力です。")
-					e.prevantDatault();;
-					return;
-				}
-				});
-			})();
-	</script>
+
 
 </body>
 </html>
