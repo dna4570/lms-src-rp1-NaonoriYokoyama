@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<th:block th:if="${hasUninput}">
-		<div class="alert alert-warning"style="visibility;hidden">
+		<div class="alert alert-warning"style="visibility;hidden; width:560px;height:300px;text-align:center;background-color:#fff;color:red;">
 			過去日を含めて未入力の勤怠があります。
 		</div>
 	</th:block>"
@@ -101,14 +101,12 @@
 	
 			<!-- Task25横山追記 -->
 	<script type="text/javascript" th:inline="javascript">
-		/*<![CDATA[*/
 		document.addEventListener('DOMContentLoaded',function(){
 			var hasUninput = false;
 			if(hasUninput){
 				alert('過去日の勤怠に未入力があります。');
 			}
 		});
-		/*]]>*/
 	</script>
 
 </body>
