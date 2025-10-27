@@ -1,9 +1,7 @@
 package jp.co.sss.lms.service;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -341,25 +339,24 @@ public class StudentAttendanceService {
 		return s == null || s.trim().isEmpty();
 	}
 
-	/*Task25横山追記とコンパイルエラー修正分*/
-	public static class AttendancePageVM {
-		public List<AttendanceManagementDto> List;
-		public boolean hasPastMissing;
-		public List<String> missingDates;
-	}
-	
-	private static final ZoneId ZONE = ZoneId.of("Asia/Tokyo");
-	public Void Update(AttendanceForm form) {
-		LocalDate target = form.getWorkDate();
-		LocalTime clockOut = form.getClockOut();
-		LocalDate today = LocalDate.now(ZONE);
+	/*Task25横山10/27*/
+	public boolean hasUninputForTodayOrPast(Integer lmsUserId) {
 		
-		if(target != null && target.isBefore(today) && clockOut == null) {
-			throw new BusinessRuleViolationException (
-			"過去日なのに退勤時間が未入力です。先に退勤時間を入力してください。",
-			"/attendance/detail?date=" + (target != null ? target : "")
-			);
+		Date today;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			today = sdf.parse(sdf.format(new Date()));
+		}catch(Exception e) {
+			return false;
 		}
-	}
 		
+		
+		
+		Integer count = tStudentAttendanceMapper.notEnterCount(lmsUserId, Constants.DB_FLG_FALSE, today);
+				
+		return count > 0; 
+		}
 }
+
+		
+
