@@ -64,5 +64,13 @@ public interface TStudentAttendanceMapper {
 	 * @return 更新結果
 	 */
 	Boolean update(TStudentAttendance tStudentAttendance);
+	
+	//戻り値integer　物理名がnotEnterCount 引数3つ　lmsUserId delteFlg TrainingDate
+	Integer selectNotEnterCount(
+		@Param("lmsUserId") Long lmsUserId,
+		@Param("deleteFlg")Integer deleteFlg,
+		@Param("trainingDate")Date trainingDate
+	);
+	
 
 }
