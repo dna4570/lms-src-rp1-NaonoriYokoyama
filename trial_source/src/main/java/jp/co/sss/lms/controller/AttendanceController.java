@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
@@ -64,8 +65,10 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("attendance/detail")
-	public String loadAttendancePageForStudent(Model model) {
-			boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast();
+	public String loadAttendancePageForStudent(
+			Model model,
+			@RequestParam(name = "lmsUserId",required = false) Integer lmsUserId) {
+			boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast(lmsUserId);
 			model.addAttribute("hashUninput",hasUninput);
 			return "attendance/detail";
 		
@@ -165,13 +168,6 @@ public class AttendanceController {
 
 		return "attendance/detail";
 	}
-	
-	/*追記Task29GetMapping箇所_横山尚宣2025_10_25*/
-//	@GetMapping("/attendance/checkPastUninput")
-//	@ResponseBody
-//	public boolean checkPastUninput() {
-//		return studentAttendanceService.hasPasUnitputForStudent();
-//	}
 	
 
 }
