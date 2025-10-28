@@ -56,6 +56,8 @@ public class AttendanceController {
 		
 		//受け取った結果を画面に返します。model.addAttribute
 		
+		
+		
 		// 勤怠一覧の取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
