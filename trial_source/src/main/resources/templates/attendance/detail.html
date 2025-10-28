@@ -102,10 +102,28 @@
 			<!-- Task25横山追記 -->
 	<script type="text/javascript" th:inline="javascript">
 		document.addEventListener('DOMContentLoaded',function(){
-			var hasUninput = false;
-			if(hasUninput){
-				alert('過去日の勤怠に未入力があります。');
+			const updateBtn = document.querySelector('input[name="complete"]');
+			if(updateBtn){
+				updateBtn.addEventListener('click',async function(event){
+					event.preventDefalt();
+					try{
+						const res = await fetch('attendance/checkPastUninput',{cache: 'no-store'});
+						const hasUninput = await res.json();
+						
+					if (hasUninput === true) {
+						alert('過去日に未入力があります。ご確認ください。');
+						return;
+					}
+					event.target.form.submit();
+					}catch (err){
+						console.error(err);
+						alert('未入力チェックに失敗しました');
+					}
+					
+				});
 			}
+
+			
 		});
 	</script>
 
