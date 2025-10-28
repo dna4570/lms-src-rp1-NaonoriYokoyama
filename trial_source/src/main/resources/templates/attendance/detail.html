@@ -80,12 +80,6 @@
 		</div>
 	</th:block>"
 
-	<script>
-		console.log(alert('打刻します。よろしいですか？'));
-		console.log(alert('過去日の勤怠に未入力があります。'));	
-	</script>
-
-
 	<script type="text/javascript" th:inline="javascript">
 		
 		$(function() {
@@ -101,42 +95,14 @@
 			return hours + ':' + minutes;
 		}
 		
-	</script>
 	
-			<!-- Task25横山追記 -->
-	<script >
-		document.addEventListener('DOMContentLoaded',function(){
-			const updateBtn = document.querySelector('input[name="complete"]');
-			if(updateBtn){
-				updateBtn.addEventListener('click',async function(event){
-					event.preventDefalt();
-					try{
-						const res = await fetch('attendance/checkPastUninput',{cache: 'no-store'});
-						const hasUninput = await res.json();
-						
-					if (hasUninput === true) {
-						alert('過去日に未入力があります。ご確認ください。');
-						return;
-					}
-					event.target.form.submit();
-					}catch (err){
-						console.error(err);
-						alert('未入力チェックに失敗しました');
-					}
-				});
-			}
+		$(document).ready(function(){
+			
 			
 		});
 	</script>
-	<script >
-		
-			const btn = document.getElementById(".btnDefault");
-			btn.addEventListener('click',function() {
-				alert('出勤ボタンが押されました！');
-			});
+
 	
-		
-	</script>
 
 </body>
 </html>
