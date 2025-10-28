@@ -94,17 +94,11 @@
 		WHERE
 			lms_user_id_=#{lmsUserId}
 			AND delete_flg = #{deleteFlg}
-			AND training_date <= #{trainingDate}
-			<if test="id != null">
-			
-			</if>
-			AND (
-			<if test="name !=null">
-			
-			</if>
-				training_start_time IS NULL
+			AND ( training_start_time IS NULL
+			OR training_start_time = ''
 			OR training_end_time IS NULL
-		)
+			OR training_end_time = ''
+			)
 	</select>
 
 </mapper>
