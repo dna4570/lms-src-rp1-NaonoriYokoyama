@@ -9,10 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
@@ -55,7 +53,8 @@ public class AttendanceController {
 		//③未入力件数が0件より多かったtrue,それ以外はfalseを返す。
 		
 		//受け取った結果を画面に返します。model.addAttribute
-		
+		boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast(loginUserDto.getLmsUserId());
+		model.addAttribute("hashUninput",hasUninput);
 		
 		
 		// 勤怠一覧の取得
@@ -66,15 +65,15 @@ public class AttendanceController {
 		return "attendance/detail";
 	}
 	
-	@GetMapping("attendance/detail")
-	public String loadAttendancePageForStudent(
-			Model model,
-			@RequestParam(name = "lmsUserId",required = false) Integer lmsUserId) {
-			boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast(lmsUserId);
-			model.addAttribute("hashUninput",hasUninput);
-			return "attendance/detail";
-		
-	}
+//	@GetMapping("attendance/detail")
+//	public String loadAttendancePageForStudent(
+//			Model model,
+//			@RequestParam(name = "lmsUserId",required = false) Integer lmsUserId) {
+//			boolean hasUninput = studentAttendanceService.hasUninputForTodayOrPast(lmsUserId);
+//			model.addAttribute("hashUninput",hasUninput);
+//			return "attendance/detail";
+//		
+	
 
 
 	/**
