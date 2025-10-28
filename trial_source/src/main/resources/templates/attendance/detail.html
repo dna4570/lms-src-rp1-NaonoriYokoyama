@@ -4,15 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>勤怠情報変更｜LMS</title>
-    <script type="text/javascript" src="../../js/jquery.2.1.1.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="../../js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="../../js/bootstrap-datepicker.ja.min.js"></script>
-    <script type="text/javascript" src="../../js/lms_common.js"></script>
-    <script type="text/javascript" src="../../js/jstree.min.js"></script>
-    <script type="text/javascript" src="../../js/currency.js"></script>
-    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -88,11 +80,14 @@
 		</div>
 	</th:block>"
 
-	
+	<script>
+		console.log(alert('打刻します。よろしいですか？'));
+		console.log(alert('過去日の勤怠に未入力があります。'));	
+	</script>
 
 
 	<script type="text/javascript" th:inline="javascript">
-		/*<![CDATA[*/
+		
 		$(function() {
 			$("#now").text('現在の時刻は　' + getClock() + '　です。');
 			setInterval(function() {
@@ -105,11 +100,11 @@
 			const minutes = ('0' + today.getMinutes()).slice(-2);
 			return hours + ':' + minutes;
 		}
-		/*]]>*/
+		
 	</script>
 	
 			<!-- Task25横山追記 -->
-	<script type="text/javascript" th:inline="javascript">
+	<script >
 		document.addEventListener('DOMContentLoaded',function(){
 			const updateBtn = document.querySelector('input[name="complete"]');
 			if(updateBtn){
@@ -133,13 +128,13 @@
 			
 		});
 	</script>
-	<script type="text/javascript" th:inline="javascript">
-		document.addEventListener('DOMContentLoaded',function(){
+	<script >
+		
 			const btn = document.getElementById(".btnDefault");
 			btn.addEventListener('click',function() {
 				alert('出勤ボタンが押されました！');
 			});
-		});
+	
 		
 	</script>
 
