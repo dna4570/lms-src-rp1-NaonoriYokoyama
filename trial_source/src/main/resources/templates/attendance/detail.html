@@ -4,6 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <title>勤怠情報変更｜LMS</title>
+    <script type="text/javascript" src="../../js/jquery.2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../../js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-datepicker.ja.min.js"></script>
+    <script type="text/javascript" src="../../js/lms_common.js"></script>
+    <script type="text/javascript" src="../../js/jstree.min.js"></script>
+    <script type="text/javascript" src="../../js/currency.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -33,8 +42,8 @@
 			</div>
 			<div class="form-group">
 				<form th:action="@{/attendance/detail}" method="post" class="form-inline">
-					<input type="submit" value="出勤" name="punchIn" class="btn btn-default" />
-					<input type="submit" value="退勤" name="punchOut" class="btn btn-default" />
+					<input type="submit" value="出勤" name="punchIn" id="btnDefault" class="btn btn-default" />
+					<input type="submit" value="退勤" name="punchOut" id="btnDefault" class="btn btn-default" />
 				</form>
 			</div>
 			<p><a th:href="@{/attendance/update}">勤怠情報を直接編集する</a></p>
@@ -119,12 +128,19 @@
 						console.error(err);
 						alert('未入力チェックに失敗しました');
 					}
-					
 				});
 			}
-
 			
 		});
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+		document.addEventListener('DOMContentLoaded',function(){
+			const btn = document.getElementById(".btnDefault");
+			btn.addEventListener('click',function() {
+				alert('出勤ボタンが押されました！');
+			});
+		});
+		
 	</script>
 
 </body>
